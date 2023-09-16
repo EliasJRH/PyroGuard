@@ -7,6 +7,6 @@ gui = tp.Gui(page="# Getting started with *Taipy*").run(dark_mode=False)
 
 tp.run(
     title="Taipy Demo",
-    host='0.0.0.0',
+    host='127.0.0.1',
     port=os.environ.get('PORT', '5000'),
 )

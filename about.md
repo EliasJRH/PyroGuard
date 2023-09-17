@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="pyroGuard.png" />
+</p>
+
 ## Inspiration
 Inspired by the numerous easily preventable deaths caused by the wildfires that have gone on this year due to climate change in areas like Canada and Hawaii and the drastic drop in air quality in areas like New York we set out to design a product to not only report and track the effects of climate change, but hopefully save some lives.
 

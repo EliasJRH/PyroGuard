@@ -23,36 +23,29 @@ update_nasa_heat_map()
 def navigate_to_map(state):
   webbrowser.open_new_tab("http://127.0.0.1:5000/heatmap_map.html")
 
+#Request data from server
+data = requests.get('https://testnet.mirrornode.hedera.com/api/v1/topics/0.0.2010263/messages').text
+data_Dict = list(reversed(json.loads(data)["messages"]))
 
-data = requests.get('https://testnet.mirrornode.hedera.com/api/v1/topics/0.0.2009473/messages').text
-
-data_Dict = json.loads(data)["messages"]
-
+#parse data into arrays with message and time stamps
 x=[]
-
-
 for row in data_Dict:
     d =time.ctime(float(row["consensus_timestamp"]))
     s = base64.b64decode(row['message']).decode('utf-8')
     temp = (s).split(',')
-    if(len(temp)==6):
-        temp.append(d)
-        x.append(temp)
+    temp.append(d)
+    x.append(temp)
 
-
+#organize data by transmitter
 Transmitters = {}
-
 for item in x:
     if item[0] not in Transmitters:
         Transmitters[item[0]] = []
-    
     Transmitters[item[0]].append(item)
 
-
+#Format data into taipy readable chart data
 Values = []
-
 ChartValues = []
-
 for key in Transmitters:
     t = Transmitters[key]
     t = numpy.transpose(t)
@@ -63,9 +56,9 @@ for key in Transmitters:
         "TVOC":[t[2][0]],
         "Temperature":[t[3][0]],
         "Lattitude":[t[4][0]],
-        "Longitude":[t[5][0]]
+        "Longitude":[t[5][0]],
+        "Latest Time Stamp":[t[6][0]]
     }
-
     Values.append(v)
 
     v = {
@@ -75,9 +68,7 @@ for key in Transmitters:
         #"Lattitude":t[4],
         #"Longitude":t[5]
     }
-
     ChartValues.append(v)
-
 
 page2_md = """
 
@@ -94,12 +85,13 @@ Current Values
 Current Values
 <|{Values[1]}|table|show_all|>
 |>
+# 
+<|NASA Map|button|on_action=navigate_to_map|>
 """
 
 # Add a navbar to switch from one page to the other
 root_md = """
 <|navbar|>
-<|NASA Map|button|on_action=navigate_to_map|>
 <|layout|columns=1fr auto 1fr|class_name=container align_columns_center|
 <|part|>
 <|part|class_name=align_item_stretch|

@@ -2,46 +2,44 @@ import requests
 import csv
 from io import StringIO
 import folium
-import webbrowser
-
-
 
 # API URL
 apiUrl = "https://firms.modaps.eosdis.nasa.gov/api/country/csv/96d927ec7c72c84e5330ff37458dd5c7/VIIRS_NOAA20_NRT/USA/1"
 
-print("Getting NASA info")
+def update_nasa_heat_map():
 
-# Fetch data from the NASA API
-response = requests.get(apiUrl)
+    print("Getting NASA info")
 
-if response.status_code == 200:
-    csv_data = response.text
+    # Fetch data from the NASA API
+    response = requests.get(apiUrl)
 
-    # Create a CSV reader
-    csv_reader = csv.DictReader(StringIO(csv_data))
+    if response.status_code == 200:
+        csv_data = response.text
 
-    # Create a map centered at a specific location
-    m = folium.Map(location=[34.0522, -118.2437], zoom_start=5)
+        # Create a CSV reader
+        csv_reader = csv.DictReader(StringIO(csv_data))
 
-    # Extract latitude and longitude from each data entry and add circles
-    for row in csv_reader:
-        latitude = float(row['latitude'])
-        longitude = float(row['longitude'])
+        # Create a map centered at a specific location
+        m = folium.Map(location=[34.0522, -118.2437], zoom_start=5)
 
-        # Add a red transparent circle to the map
-        folium.Circle(
-            location=[latitude, longitude],
-            radius=1000,  # Adjust the radius as needed
-            color='red',
-            fill=True,
-            fill_color='red',
-            fill_opacity=0.5,
-        ).add_to(m)
+        # Extract latitude and longitude from each data entry and add circles
+        for row in csv_reader:
+            latitude = float(row['latitude'])
+            longitude = float(row['longitude'])
 
-    # Save the map as an HTML file
-    m.save("heatmap_map.html")
+            # Add a red transparent circle to the map
+            folium.Circle(
+                location=[latitude, longitude],
+                radius=1000,  # Adjust the radius as needed
+                color='red',
+                fill=True,
+                fill_color='red',
+                fill_opacity=0.5,
+            ).add_to(m)
 
-    print("Map created with circles.")
-    webbrowser.open("heatmap_map.html")
-else:
-    print(f"Failed to retrieve data from the NASA API. Status code: {response.status_code}")
+        # Save the map as an HTML file
+        m.save("heatmap_map.html")
+
+        print("Map created with circles.")
+    else:
+        print(f"Failed to retrieve data from the NASA API. Status code: {response.status_code}")

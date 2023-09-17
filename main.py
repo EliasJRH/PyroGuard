@@ -2,9 +2,20 @@ import os
 import webbrowser
 from taipy import Gui
 from taipy.gui import Markdown
+from htmlGetter import update_nasa_heat_map
+# from rocketry import Rocketry   
+# from rocketry.conds import every
+
+# app = Rocketry()
+
+# @app.task(every("30 seconds"))
+# def do_continuously():
+#   print("It's been 30 seconds")
+
+update_nasa_heat_map()
 
 def navigate_to_map(state):
-  webbrowser.open_new_tab("http://127.0.0.1:5000/map.html")
+  webbrowser.open_new_tab("http://127.0.0.1:5000/heatmap_map.html")
 
 # Add a navbar to switch from one page to the other
 root_md = """

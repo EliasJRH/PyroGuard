@@ -96,7 +96,7 @@ root_md = """
 <|layout|columns=1fr auto 1fr|class_name=container align_columns_center|
 <|part|>
 <|part|class_name=align_item_stretch|
-# *Pyro-Guard*
+# *PyroGuard*
 |>
 <|part|>
 |>

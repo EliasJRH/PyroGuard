@@ -2,3 +2,4 @@ taipy==2.4.0
 scikit-learn==1.3.0
 statsmodels==0.14.0
 folium==0.14.0
+rocketry==2.5.1

@@ -18,10 +18,8 @@ from htmlGetter import update_nasa_heat_map
 # def do_continuously():
 #   print("It's been 30 seconds")
 
-update_nasa_heat_map()
+# update_nasa_heat_map()
 
-def navigate_to_map(state):
-  webbrowser.open_new_tab("www.pyro-guard.us/heatmap_map.html")
 
 #Request data from server
 data = requests.get('https://testnet.mirrornode.hedera.com/api/v1/topics/0.0.2010263/messages').text
@@ -85,8 +83,11 @@ Current Values
 Current Values
 <|{Values[1]}|table|show_all|>
 |>
-# 
-<|NASA Map|button|on_action=navigate_to_map|>
+#
+Heatmap
+<p align="center">
+    <img src="heatmap.png" />
+</p>
 """
 
 # Add a navbar to switch from one page to the other
